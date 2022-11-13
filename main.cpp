@@ -16,7 +16,6 @@ void generateArray(int list[], int);
 void showArray(int list[], int);
 
 int main(void) {
-  //srand time
   srand((unsigned)time(0));
   clock_t start, finish; 
   double merge_duration[3] = {0};
@@ -30,45 +29,40 @@ int main(void) {
 
   //Creating an array with different sizes
   int ArraySize[] = {20000, 60000, 80000, 160000, 320000};
-  // Merge sort couldn't handle 160000 and 320000 on replit for array sizes. 640000 elements will not execute the code because this array size is too large for replit. 
-
-  //Looping 5 times for different sizes
+  
   for(int c = 0; c < 5; c++) {
-    // Loop 3 times
     for(int d = 0; d < 3; d++) {
-      // Dynamically allocates the memory
-      merge = new int[ArraySize[c]];
+      merge = new int[ArraySize[c]]; // Dynamically allocates the memory
       generateArray(merge, ArraySize[c]);
       start = clock(); // time in milliseconds
       MergeSort(merge, 0, ArraySize[c] - 1);
-      finish = clock(); //milliseconds
+      finish = clock();
       merge_duration[c] += (double)((finish - start) / double(CLOCKS_PER_SEC)); // time in seconds
       merge_duration[c] /= 3.0;
     }
-    //Loop 3 times
+    
     for(int d = 0; d < 3; d++) {
-      // Dynamically allocates the memory
-      quick_sorted = new int[ArraySize[c]];
+      quick_sorted = new int[ArraySize[c]];  // Dynamically allocates the memory
       generateArray(quick_sorted, ArraySize[c]);
       start = clock(); // time in milliseconds
       QuickSort(quick_sorted, 0, ArraySize[c] - 1);
-      finish = clock(); // milliseconds
+      finish = clock();
       quick_duration[c] += (double)((finish - start) / double(CLOCKS_PER_SEC));
       quick_duration[c] /= 3.0;
     }
-    //Loop 3 times
+    
+    
     for(int d = 0; d < 3; d++) {
-      // Dynamically allocates the memory
-      ins_sorted = new int[ArraySize[c]];
+      ins_sorted = new int[ArraySize[c]];  // Dynamically allocates the memory
       generateArray(ins_sorted, ArraySize[c]);
       start = clock(); //time in milliseconds
       InsertionSort(ins_sorted, ArraySize[c]);
-      finish = clock(); //time in milliseconds
-      //the constant CLOCKS_PER_SEC below is equal to 1000
-      insertion_duration[c] += (double)((finish - start) / double(CLOCKS_PER_SEC));
+      finish = clock();
+      insertion_duration[c] += (double)((finish - start) / double(CLOCKS_PER_SEC)); // the constant CLOCKS_PER_SEC below is equal to 1000
       insertion_duration[c] /= 3.0; 
     }
   }
+  
   cout << "Each sorting algorithm across with 3 consecutive tests on average: ";
   cout << "\nData Size \tMerge Sort \tQuick Sort \tInsertion Sort\n";
 
@@ -81,40 +75,27 @@ int main(void) {
 
 // Creating a function that assigns random numbers to the array
 void generateArray(int list[], int listSize) {
-  // Loops until the end of the array
-  for(int x = 0; x < listSize; x++) {
-    // Generating random numbers between 1 and listSize storing it in x index position
-    list[x] = (rand() % listSize) + 1;
+  for(int x = 0; x < listSize; x++) { // Loops until the end of the array
+    list[x] = (rand() % listSize) + 1; // Generating random numbers between 1 and listSize storing it in x index position
   }
-
 }
 
 void showArray(int list[], int listSize) {
-  // Loops until the end of the array
-  for(int x = 0; x < listSize; x++) {
-    // Showing the x index position value
-    cout << list[x] << " ";
+  for(int x = 0; x < listSize; x++) { // Loops until the end of the array
+    cout << list[x] << " "; // Showing the x index position value
     cout << endl; 
   }
 }
 
-// Creating a function to use InsertionSort
 void InsertionSort(int a[], int listSize) {
-  // Loops number of elements in the array
-  for(int c = 1; c < listSize; c++) {
-    // Stores the "c" position element to swap
-    int stored = a[c];
-    // Stores previous index position of "c" 
-    int d = c - 1;
-    // Loops until c index position element of the array is greater than stored value and to 0 index position
-    while(d >= 0 && a[c] > stored) {
-      // Assigns the d index position element at next index position of d
-      a[d + 1] = a[d];
+  for(int c = 1; c < listSize; c++) {   // Loops number of elements in the array
+    int stored = a[c];  // Stores the "c" position element to swap
+    int d = c - 1;  // Stores previous index position of "c" 
+    while(d >= 0 && a[c] > stored) {   // Loops until c index position element of the array is greater than stored value and to 0 index position
+      a[d + 1] = a[d];   // Assigns the d index position element at next index position of d
       d = d - 1;
     }
-    // Assigns the c index position element which is stored at next index position of d
-    a[d + 1] = stored;
-
+    a[d + 1] = stored;     // Assigns the c index position element which is stored at next index position of d
   }
 }
 
@@ -139,7 +120,6 @@ int partition(int a[], int p, int q) {
   return (i + 1);
 }
 
-// Creating a function to use QuickSort
 void QuickSort(int list[], int low, int high) {
   if(low < high) {
     int pi = partition(list, low, high);
@@ -148,11 +128,10 @@ void QuickSort(int list[], int low, int high) {
   }
 }
 
-// Creating a function to use merge operation
+
 void merge(int list[], int l, int m, int r) {
   int i, j, k;
-  // Stores the length
-  int n1 = m - l + 1;
+  int n1 = m - l + 1; // Stores the length
   int n2 = r - m;
 
   // Creates left and right pointer type array
@@ -169,63 +148,44 @@ void merge(int list[], int l, int m, int r) {
     right[j] = list[m + 1 + j];
   }
 
-  // For left sub array
-  i = 0;
-  // For right sub array
-  j = 0;
-  // For merged sub array
-  k = l;
+  i = 0;  // For left sub array
+  j = 0; // For right sub array
+  k = l; // For merged sub array
 
-  // Loops until i is less than n1 and j is less than n2
+ 
   while(i < n1 && j < n2) {
-    // Checks if left sub array i index position data is less than or equals to right sub array j index position data
-    if(left[i] <= right[j]) {
-      // Assigns the left sub array i index position data at k index position of the list
-      list[k] = left[i];
-      // Increase index of left sub array by one
-      i++;
+    if(left[i] <= right[j]) {   // Checks if left sub array i index position data is less than or equals to right sub array j index position data
+      list[k] = left[i];       // Assigns the left sub array i index position data at k index position of the list
+      i++; // Increase index of left sub array by one
     }
 
     else {
-      // Assigns the right sub array j index position data at k index position of list
-      list[k] = right[j];
-      // Increase the index of right sub array by one
-      j++;
+      list[k] = right[j];       // Assigns the right sub array j index position data at k index position of list
+      j++;       // Increase the index of right sub array by one
     }
-    // Increase the merged array index by one
-    k++;
+    k++;     // Increase the merged array index by one
   }
+  
   // Loops until it gets to n1 for rest of the elements of left sub array
   while (i < n1) {
-    // Assigns the left sub array i index position data at k index position of list
-    list[k] = left[i];
-    // Increase the index of left sub array by one
-    i++;
-    // Increase the merged array index by one
-    k++;
+    list[k] = left[i];  // Assigns the left sub array i index position data at k index position of list
+    i++;     // Increase the index of left sub array by one
+    k++;    // Increase the merged array index by one
   }
 
   // Loops until it gets to n2 for rest of the elements of right sub array
   while (j < n2) {
-    // Assigns the right sub array j index position data at k index position of list
-    list[k] = right[j];
-    // Increase the index of right sub array by one
-    j++;
-    // Increase the merged array index by one
-    k++;
+    list[k] = right[j]; // Assigns the right sub array j index position data at k index position of list
+    j++; // Increase the index of right sub array by one
+    k++; // Increase the merged array index by one
   }
 }
 
-// Creating a function to use MergeSort
 void MergeSort(int list[], int l, int r) {
-  // Checks if left is less than right
-  if (l < r) {
-    // Calculates the middle
-    int m = l + (r - l) / 2;
-    // Sort first and second halves
-    MergeSort(list, l, m);
+  if (l < r) { // Checks if left is less than right
+    int m = l + (r - l) / 2; // Calculates the middle
+    MergeSort(list, l, m); // Sort first and second halves
     MergeSort(list, m + 1, r);
-    // Calls the function to merge
-    merge(list, l, m, r);
+    merge(list, l, m, r); // Calls the function to merge
   }
 }
